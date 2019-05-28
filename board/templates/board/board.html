@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Queens board</title>
+    <style>
+        table,td {
+           border: 1px solid black;
+
+        }
+        td {
+            padding: 10px;
+        }
+        .Queen{
+            background-color: red;
+        }
+        .Obstacle{
+            background-color: blue;
+        }
+
+        .step{
+            background-color: yellow;
+        }
+    </style>
+
+     <script>
+        board = {{ result }};
+
+        function paintClass(x,y,c){
+            document.getElementById(getId(x,y)).classList.add(c);
+        }
+
+        function getId(x,y){
+
+            return "tile_"+x+"_"+y
+        }
+
+    </script>
+
+</head>
+<body>
+    <table>
+        {% if not error  %}
+            {% for i in rangey %}
+            <tr>
+                {% for n in rangex %}
+                    <td id="tile_{{i}}_{{n}}">
+                    </td>
+                {% endfor %}
+            </tr>
+
+            {% endfor %}
+        {% else %}
+            {{ error }}
+        {% endif %}
+
+
+    </table>
+
+</body>
+<script>
+(function() {
+   // your page initialization code here
+   // the DOM will be available here
+   error = "{{ error }}";
+   if(error == ""){
+
+       paintClass(board["Queen"][0],board["Queen"][1],"Queen");
+
+       board["Obstacles"].forEach(function(entry) {
+            console.log(entry);
+            paintClass(entry[0],entry[1],"Obstacle");
+       });
+
+       board["steps"].forEach(function(entry) {
+            console.log(entry);
+            paintClass(entry[0],entry[1],"step");
+       });
+   }
+
+
+
+
+})();
+</script>
+</html>
